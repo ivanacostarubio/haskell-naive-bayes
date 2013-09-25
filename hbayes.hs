@@ -1,4 +1,8 @@
--- TODO: Being able to read categories from a file
+-- TODO:
+-- * Being able to read categories by listing files names
+-- * Validate that [TrainedCategory] does not contain a duplicate category?
+-- * Being able to train a category from a file
+
 data Category = Vegetables | Proteins
     deriving (Show)
 
