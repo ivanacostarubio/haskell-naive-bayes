@@ -26,6 +26,15 @@ prior (t,ts) = fromIntegral( length(dataFromTrainedCategory(t))) / fromIntegral(
 likelihood :: String -> TrainedCategory -> Float
 likelihood w tc = sProb(w, dataFromTrainedCategory(tc))
 
+cprob :: String -> TrainedCategory -> [TrainedCategory] -> (Category, Float)
+cprob w tc tcs = ( categoryFromTRainedCategory(tc), prior(tc, tcs) * likelihood w tc)
+
+reducingNBayes :: String -> [TrainedCategory] -> [TrainedCategory] -> [(Category, Float)]
+reducingNBayes w [] tcs' = []
+reducingNBayes w tcs tcs' = cprob w (head tcs) tcs' : reducingNBayes w (tail tcs) tcs'
+
+nBayes :: String -> [TrainedCategory] -> [(Category, Float)]
+nBayes s tcs = reducingNBayes s tcs tcs
 
 --------------------------
 -- Naive Bayes Classifier
