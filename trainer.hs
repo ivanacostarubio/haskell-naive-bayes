@@ -25,13 +25,11 @@ pendingWords :: String -> IO String
 pendingWords x = do
   f <- readFile (x ++ "/pending")
   let r = head (lines f)
-  print f -- OMG, hack to read the whole File. Lazzy Avaluation?
-  return r
+  length f `seq` return r --  OMG, hack to read the whole File. Lazzy Avaluation?
 
 removePendingFromFile x = do
-  f <- readFile(x ++ "/pending")
-  print f -- OMG, hack to read the whole File. Lazzy Avaluation?
-  writeFile (x ++ "/pending") (unlines $ tail $ lines f)
+  f <- readFile(x ++ "/pending") --  OMG, hack to read the whole File. Lazzy Avaluation?
+  length f `seq` writeFile (x ++ "/pending") (unlines $ tail $ lines f)
 
 addToFile :: String -> String -> IO()
 addToFile x y = do
