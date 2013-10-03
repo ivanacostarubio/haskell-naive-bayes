@@ -4,7 +4,7 @@ import Data.List.Utils
 import System.IO
 
 numbers :: [String]
-numbers = map show [0..100] 
+numbers = map show [1..100] 
 
 numbered_categories :: [String] -> [String] -> [String]
 numbered_categories [] _ = []
