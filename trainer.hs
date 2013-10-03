@@ -1,5 +1,6 @@
 import System.Directory
 import Data.List.Split
+import Data.List.Utils
 import System.IO
 
 numbers :: [String]
@@ -17,11 +18,8 @@ categories x = do
 cleanInputNumber :: String -> String
 cleanInputNumber x = concat (tail (splitOn("-") x))
 
-fileNameFromInput :: [String] -> Char -> String
-fileNameFromInput xs x = cleanInputNumber( head ( filter (startsWith' x) xs))
-
-startsWith' :: Char -> String -> Bool
-startsWith' y x =  (head x) == y
+fileNameFromInput :: [String] -> String -> String
+fileNameFromInput xs x = cleanInputNumber( head ( filter (startswith x) xs))
 
 pendingWords :: String -> IO String
 pendingWords x = do
@@ -39,8 +37,10 @@ addToFile :: String -> String -> IO()
 addToFile x y = do
   appendFile x y
 
+
 main = do
     let categories_folder = "./data/food"
+    -- TODO: Don't display error if empty file
     pw <- pendingWords categories_folder
     c <- categories categories_folder
     let d = numbered_categories c numbers
@@ -48,7 +48,7 @@ main = do
     print "What category is: "
     print pw
     i <- getLine
-    let ii = head i
-    let file = fileNameFromInput d ii
+    let file = fileNameFromInput d i
     addToFile file ("" ++ pw ++ "\n")
     removePendingFromFile categories_folder
+    main
