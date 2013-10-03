@@ -35,18 +35,18 @@ addToFile :: String -> String -> IO()
 addToFile x y = do
   appendFile x y
 
-
 main = do
-    let categories_folder = "./data/food"
+    let categories_folder = "./data/should_eat"
     -- TODO: Don't display error if empty file
     pw <- pendingWords categories_folder
     c <- categories categories_folder
     let d = numbered_categories c numbers
-    mapM_ print d
-    print "What category is: "
-    print pw
+    putStrLn "::::::::::::::::::::::::"
+    putStrLn pw
+    putStrLn "::::::::::::::::::::::::"
+    mapM_ putStrLn d
     i <- getLine
     let file = fileNameFromInput d i
-    addToFile file ("" ++ pw ++ "\n")
+    addToFile (categories_folder ++ "/" ++ file) ("" ++ pw ++ "\n")
     removePendingFromFile categories_folder
     main
